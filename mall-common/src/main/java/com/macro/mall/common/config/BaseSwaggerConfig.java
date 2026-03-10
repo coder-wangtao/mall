@@ -1,6 +1,7 @@
 package com.macro.mall.common.config;
 
 import com.macro.mall.common.domain.SwaggerProperties;
+import org.apache.tomcat.util.net.SecureNioChannel;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +16,7 @@ import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.spring.web.plugins.WebFluxRequestHandlerProvider;
 import springfox.documentation.spring.web.plugins.WebMvcRequestHandlerProvider;
+import sun.util.resources.cldr.ar.CalendarData_ar_YE;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -78,7 +80,7 @@ public abstract class BaseSwaggerConfig {
         AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
         authorizationScopes[0] = authorizationScope;
-        result.add(new SecurityReference("Authorization", authorizationScopes));
+        result.add(new SecurityReference("Authorization", authorizationScopes)); // 创建一个 SecurityReference，指向“Authorization”请求头
         return result;
     }
 

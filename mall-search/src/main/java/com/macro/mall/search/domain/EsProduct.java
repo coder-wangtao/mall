@@ -18,22 +18,22 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode
-@Document(indexName = "pms")
-@Setting(shards = 1,replicas = 0)
+@Document(indexName = "pms") // Elasticsearch 索引名 pms
+@Setting(shards = 1,replicas = 0) // shards = 1 → 分片数量 replicas = 0 → 副本数量
 public class EsProduct implements Serializable {
     private static final long serialVersionUID = -1L;
     @Id
     private Long id;
-    @Field(type = FieldType.Keyword)
+    @Field(type = FieldType.Keyword) // 不分词，做过滤/聚合更快
     private String productSn;
     private Long brandId;
-    @Field(type = FieldType.Keyword)
+    @Field(type = FieldType.Keyword) // 不分词，做过滤/聚合更快
     private String brandName;
     private Long productCategoryId;
-    @Field(type = FieldType.Keyword)
+    @Field(type = FieldType.Keyword) // 不分词，做过滤/聚合更快
     private String productCategoryName;
     private String pic;
-    @Field(analyzer = "ik_max_word",type = FieldType.Text)
+    @Field(analyzer = "ik_max_word",type = FieldType.Text) // 使用 IK 分词器（中文分词）
     private String name;
     @Field(analyzer = "ik_max_word",type = FieldType.Text)
     private String subTitle;
@@ -46,6 +46,6 @@ public class EsProduct implements Serializable {
     private Integer stock;
     private Integer promotionType;
     private Integer sort;
-    @Field(type = FieldType.Nested, fielddata = true)
+    @Field(type = FieldType.Nested, fielddata = true) // 嵌套对象
     private List<EsProductAttributeValue> attrValueList;
 }

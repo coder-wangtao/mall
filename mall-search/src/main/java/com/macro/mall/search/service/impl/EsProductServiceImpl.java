@@ -113,6 +113,7 @@ public class EsProductServiceImpl implements EsProductService {
         //分页
         nativeSearchQueryBuilder.withPageable(pageable);
         //过滤
+        // 过滤条件是 精确匹配，不会参与搜索打分
         if (brandId != null || productCategoryId != null) {
             BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
             if (brandId != null) {
@@ -134,8 +135,10 @@ public class EsProductServiceImpl implements EsProductService {
                     ScoreFunctionBuilders.weightFactorFunction(5)));
             filterFunctionBuilders.add(new FunctionScoreQueryBuilder.FilterFunctionBuilder(QueryBuilders.matchQuery("keywords", keyword),
                     ScoreFunctionBuilders.weightFactorFunction(2)));
+
             FunctionScoreQueryBuilder.FilterFunctionBuilder[] builders = new FunctionScoreQueryBuilder.FilterFunctionBuilder[filterFunctionBuilders.size()];
             filterFunctionBuilders.toArray(builders);
+
             FunctionScoreQueryBuilder functionScoreQueryBuilder = QueryBuilders.functionScoreQuery(builders)
                     .scoreMode(FunctionScoreQuery.ScoreMode.SUM)
                     .setMinScore(2);
@@ -241,6 +244,30 @@ public class EsProductServiceImpl implements EsProductService {
         NativeSearchQuery searchQuery = builder.build();
         SearchHits<EsProduct> searchHits = elasticsearchRestTemplate.search(searchQuery, EsProduct.class);
         return convertProductRelatedInfo(searchHits);
+//
+//        {
+//            "brandNames":[
+//                "Apple",
+//                "Huawei",
+//                "Xiaomi"
+//            ],
+//            "productCategoryNames":[
+//                "手机", "手机配件"
+//            ],
+//            "productAttrs":[
+//                {
+//                    "attrId":1,
+//                    "attrName":"颜色",
+//                    "attrValues":["黑色","白色","蓝色"]
+//                },
+//                {
+//                    "attrId":2,
+//                    "attrName":"内存",
+//                    "attrValues":["128G","256G"]
+//                }
+//            ]
+//        }
+
     }
 
     /**

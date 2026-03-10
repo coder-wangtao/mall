@@ -36,6 +36,7 @@ import java.util.Map;
 @Aspect
 @Component
 @Order(1)
+// 统一处理所有 Web 请求的日志记录
 public class WebLogAspect {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLogAspect.class);
 
@@ -52,6 +53,7 @@ public class WebLogAspect {
     }
 
     @Around("webLog()")
+    // @Around 切面包裹整个方法执行，既可以 前置处理，也可以 后置处理，甚至可以 修改返回结果。
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
         long startTime = System.currentTimeMillis();
         //获取当前请求对象
@@ -86,7 +88,7 @@ public class WebLogAspect {
         logMap.put("spendTime",webLog.getSpendTime());
         logMap.put("description",webLog.getDescription());
 //        LOGGER.info("{}", JSONUtil.parse(webLog));
-        LOGGER.info(Markers.appendEntries(logMap), JSONUtil.parse(webLog).toString());
+            LOGGER.info(Markers.appendEntries(logMap), JSONUtil.parse(webLog).toString());
         return result;
     }
 

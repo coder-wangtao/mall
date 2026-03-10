@@ -84,7 +84,7 @@ public class SmsCouponServiceImpl implements SmsCouponService {
     @Override
     public int update(Long id, SmsCouponParam couponParam) {
         couponParam.setId(id);
-        int count =couponMapper.updateByPrimaryKey(couponParam);
+        int count = couponMapper.updateByPrimaryKey(couponParam);
         //删除后插入优惠券和商品关系表
         if(couponParam.getUseType().equals(2)){
             for(SmsCouponProductRelation productRelation:couponParam.getProductRelationList()){

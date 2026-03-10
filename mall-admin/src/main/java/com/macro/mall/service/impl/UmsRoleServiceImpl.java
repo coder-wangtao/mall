@@ -104,7 +104,7 @@ public class UmsRoleServiceImpl implements UmsRoleService {
     @Override
     public int allocResource(Long roleId, List<Long> resourceIds) {
         //先删除原有关系
-        UmsRoleResourceRelationExample example=new UmsRoleResourceRelationExample();
+        UmsRoleResourceRelationExample example = new UmsRoleResourceRelationExample();
         example.createCriteria().andRoleIdEqualTo(roleId);
         roleResourceRelationMapper.deleteByExample(example);
         //批量插入新关系

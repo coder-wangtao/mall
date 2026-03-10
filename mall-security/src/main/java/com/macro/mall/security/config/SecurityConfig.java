@@ -38,7 +38,7 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = httpSecurity
-                .authorizeRequests();
+                .authorizeRequests(); // 返回 URL 授权配置器,它是一个 可操作的“URL 权限规则注册表”
         //不需要保护的资源路径允许访问
         for (String url : ignoreUrlsConfig.getUrls()) {
             registry.antMatchers(url).permitAll();
@@ -60,10 +60,17 @@ public class SecurityConfig {
                 // 自定义权限拒绝处理类
                 .and()
                 .exceptionHandling()
-                .accessDeniedHandler(restfulAccessDeniedHandler)
-                .authenticationEntryPoint(restAuthenticationEntryPoint)
+                .accessDeniedHandler(restfulAccessDeniedHandler) // 处理 未认证请求（用户没有登录或 JWT token 无效时）
+                .authenticationEntryPoint(restAuthenticationEntryPoint) // 理 已认证但无权限访问（用户登录了，但没有访问权限）
                 // 自定义权限拦截器JWT过滤器
                 .and()
+                // 用户请求时：
+                // JWT Token 已经在请求头中
+                // jwtAuthenticationTokenFilter 解析 token
+                // 校验成功 → 设置 SecurityContext（用户身份）
+                // 如果放在 表单登录过滤器之后：
+                // Spring Security 可能认为用户未认证
+                // JWT 验证会被延迟，认证失败
                 .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
         //有动态权限配置时添加动态权限校验过滤器
         if(dynamicSecurityService!=null){

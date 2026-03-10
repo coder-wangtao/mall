@@ -31,7 +31,14 @@ public class MallSecurityConfig {
         //获取登录用户信息
         return username -> adminService.loadUserByUsername(username);
     }
-
+    //数据库里一条记录：
+    //id = 3
+    //name = 商品删除
+    //url = /product/delete
+    // "/product/delete" -> "3:商品删除"
+    //意味着：
+    //访问 /product/delete
+    //必须拥有 ID 为 3 的权限资源
     @Bean
     public DynamicSecurityService dynamicSecurityService() {
         return new DynamicSecurityService() {

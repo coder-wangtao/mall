@@ -54,7 +54,7 @@
         <mall-mbg.version>1.0-SNAPSHOT</mall-mbg.version>
         <mall-security.version>1.0-SNAPSHOT</mall-security.version>
     </properties>
-
+    <!--告诉 Maven 你这个项目实际需要哪些库，编译和打包都会用到。-->
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -90,6 +90,8 @@
         </dependency>
     </dependencies>
 
+    <!--不直接引入依赖，只是统一管理版本号和范围，方便子模块或后续 <dependencies> 使用。-->
+    <!--本身不会把依赖加入项目。-->
     <dependencyManagement>
         <dependencies>
             <!--mall通用模块-->

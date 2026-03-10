@@ -14,7 +14,11 @@ import java.util.Properties;
  * 自定义注释生成器
  * Created by macro on 2018/4/26.
  */
+// 目的是 覆盖默认注释生成行为，添加自定义逻辑
 public class CommentGenerator extends DefaultCommentGenerator {
+    // 给字段加 Swagger 注解 @ApiModelProperty
+    // 给字段加 JavaDoc
+    // 根据配置决定是否添加注释
     private boolean addRemarkComments = false;
     private static final String EXAMPLE_SUFFIX="Example";
     private static final String MAPPER_SUFFIX="Mapper";
@@ -63,6 +67,8 @@ public class CommentGenerator extends DefaultCommentGenerator {
         field.addJavaDocLine(" */");
     }
 
+    //只给 Model 类导入 Swagger 注解
+    //Mapper / Example 不导入，避免无用依赖
     @Override
     public void addJavaFileComment(CompilationUnit compilationUnit) {
         super.addJavaFileComment(compilationUnit);

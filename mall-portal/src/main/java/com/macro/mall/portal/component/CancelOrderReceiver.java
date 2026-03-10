@@ -24,3 +24,17 @@ public class CancelOrderReceiver {
         LOGGER.info("process orderId:{}",orderId);
     }
 }
+
+//用户下单
+//   │
+//           ▼
+//调用 CancelOrderSender.sendMessage(orderId, delayTimes)
+//   │
+//           ▼
+//消息发送到 RabbitMQ 延迟队列
+//   │   └── Message TTL = delayTimes
+//   ▼
+//队列等待 delayTimes 毫秒
+//   │
+//           ▼
+//消费者监听队列，处理消息 → 自动取消订单

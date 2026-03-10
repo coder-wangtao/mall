@@ -18,6 +18,7 @@ import java.util.*;
 public class DynamicSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 
     private static Map<String, ConfigAttribute> configAttributeMap = null;
+
     @Autowired
     private DynamicSecurityService dynamicSecurityService;
 

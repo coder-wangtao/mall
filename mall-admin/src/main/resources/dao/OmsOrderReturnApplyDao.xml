@@ -31,6 +31,7 @@
             AND create_time LIKE CONCAT(#{queryParam.createTime}, '%')
         </if>
         <if test="queryParam.handleTime!=null and queryParam.handleTime!=''">
+            --CONCAT 把多个字符串连接成一个字符串
             AND handle_time LIKE CONCAT(#{queryParam.handleTime}, '%')
         </if>
         <if test="queryParam.receiverKeyword!=null and queryParam.receiverKeyword!=''">

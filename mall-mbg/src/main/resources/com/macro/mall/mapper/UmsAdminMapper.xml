@@ -13,10 +13,16 @@
     <result column="login_time" jdbcType="TIMESTAMP" property="loginTime" />
     <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
+<!--  UmsAdminExample example = new UmsAdminExample();-->
+<!--  example.or().andStatusEqualTo(1).andUsernameLike("%Alice%");-->
+<!--  example.or().andStatusEqualTo(2);-->
+<!--  WHERE (status = 1 AND username LIKE '%Alice%')-->
+<!--  OR (status = 2)-->
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
         <if test="criteria.valid">
+--           (status = 1 AND username = 'Alice')
           <trim prefix="(" prefixOverrides="and" suffix=")">
             <foreach collection="criteria.criteria" item="criterion">
               <choose>
@@ -104,6 +110,8 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
+  <!--  会把 对象中所有字段都插入数据库-->
+  <!--  即使某些字段为 null，也会生成 INSERT 语句-->
   <insert id="insert" parameterType="com.macro.mall.model.UmsAdmin">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
@@ -117,6 +125,7 @@
       #{createTime,jdbcType=TIMESTAMP}, #{loginTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}
       )
   </insert>
+  <!--  只插入 非 null 字段-->
   <insert id="insertSelective" parameterType="com.macro.mall.model.UmsAdmin">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()

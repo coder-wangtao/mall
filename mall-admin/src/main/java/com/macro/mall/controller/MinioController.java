@@ -30,6 +30,7 @@ import java.util.Date;
 public class MinioController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MinioController.class);
+    
     @Value("${minio.endpoint}")
     private String ENDPOINT;
     @Value("${minio.bucketName}")

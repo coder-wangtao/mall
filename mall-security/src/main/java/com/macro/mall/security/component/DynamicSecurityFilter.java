@@ -18,12 +18,13 @@ import java.io.IOException;
  * 动态权限过滤器，用于实现基于路径的动态权限过滤
  * Created by macro on 2020/2/7.
  */
+// 实现 基于路径的动态权限控制（比如不同角色访问不同接口）
 public class DynamicSecurityFilter extends AbstractSecurityInterceptor implements Filter {
 
     @Autowired
-    private DynamicSecurityMetadataSource dynamicSecurityMetadataSource;
+    private DynamicSecurityMetadataSource dynamicSecurityMetadataSource; // 提供动态权限规则
     @Autowired
-    private IgnoreUrlsConfig ignoreUrlsConfig;
+    private IgnoreUrlsConfig ignoreUrlsConfig; // 白名单路径
 
     @Autowired
     public void setMyAccessDecisionManager(DynamicAccessDecisionManager dynamicAccessDecisionManager) {

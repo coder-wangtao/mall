@@ -4,7 +4,8 @@
     <resultMap id="listWithChildrenMap" type="com.macro.mall.dto.PmsProductCategoryWithChildrenItem"
                extends="com.macro.mall.mapper.PmsProductCategoryMapper.BaseResultMap">
         <collection property="children" resultMap="com.macro.mall.mapper.PmsProductCategoryMapper.BaseResultMap"
-                    columnPrefix="child_"></collection>
+                    columnPrefix="child_">
+        </collection>
     </resultMap>
     <select id="listWithChildren" resultMap="listWithChildrenMap">
         select

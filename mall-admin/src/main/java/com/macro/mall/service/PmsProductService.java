@@ -18,6 +18,7 @@ public interface PmsProductService {
     /**
      * 创建商品
      */
+    // 使用数据库默认隔离级别 如果调用方法时已经有事务，直接加入。如果没有事务，Spring 会新建一个事务。
     @Transactional(isolation = Isolation.DEFAULT,propagation = Propagation.REQUIRED)
     int create(PmsProductParam productParam);
 
